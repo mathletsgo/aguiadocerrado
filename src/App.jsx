@@ -16,7 +16,9 @@ import {
   MapPin,
   Target,
   BarChart3,
-  Ticket
+  Ticket,
+  FileSpreadsheet,
+  Sparkles
 } from 'lucide-react';
 import { DEFAULT_META_IPC, DEFAULT_REGIONAL_TARGETS } from './data/metas';
 import { parseWorkbookBuffer } from './utils/excelParser';
@@ -811,7 +813,7 @@ export default function App() {
               Anexar planilha
             </label>
 
-            {activeTab !== 'metas' && (
+            {activeItem && activeTab !== 'metas' && (
               <>
                 <select
                   value={sortBy}
@@ -1110,6 +1112,75 @@ export default function App() {
                   />
                 </div>
               ))}
+            </div>
+          </div>
+        ) : !activeItem ? (
+          /* TELA INICIAL: PEDE PARA ANEXAR A PLANILHA NA PRIMEIRA VEZ */
+          <div className="hero-empty-state">
+            <div className="hero-shield-wrap">
+              <img
+                src={logos.regionalClean}
+                alt="Águias do Cerrado"
+                className="hero-shield"
+              />
+            </div>
+            <div className="hero-title-box">
+              <h1 className="hero-title">
+                PLACAR DE LOJAS <span className="hl">ÁGUIAS DO CERRADO</span>
+              </h1>
+              <p className="hero-sub">
+                Painel oficial de rankings e indicadores da Regional Centauro.
+                Anexe a planilha para carregar automaticamente todos os rankings com visual de transmissão esportiva.
+              </p>
+            </div>
+
+            <div
+              className="hero-dropzone-card"
+              onClick={() => document.getElementById('file-in')?.click()}
+            >
+              <div className="hero-icon-bubble">
+                <FileSpreadsheet size={38} />
+              </div>
+              <h3 className="hero-card-title">ANEXAR PLANILHA DE INDICADORES</h3>
+              <p className="hero-card-desc">
+                Arraste o arquivo <b>Painel de Indicadores Lojas.xlsx</b> aqui ou clique no botão abaixo para selecionar do computador.
+              </p>
+              <label htmlFor="file-in" className="hero-upload-btn" onClick={(e) => e.stopPropagation()}>
+                <Upload size={20} />
+                SELECIONAR PLANILHA EXCEL
+              </label>
+            </div>
+
+            <div className="hero-features-grid">
+              <div className="hero-feat-card">
+                <div className="hero-feat-title">
+                  <Trophy size={18} />
+                  <span>13 KPIs AUTOMATIZADOS</span>
+                </div>
+                <p className="hero-feat-desc">
+                  IPC, Cupom Misto, Paridade, Ruptura, Conversão, NPS e Vendas calculados instantaneamente com pódio e Z4.
+                </p>
+              </div>
+
+              <div className="hero-feat-card">
+                <div className="hero-feat-title">
+                  <Sparkles size={18} />
+                  <span>CUPOM MISTO &amp; PARIDADE</span>
+                </div>
+                <p className="hero-feat-desc">
+                  Visão com selo Duplo Ouro, barras de atingimento da meta e filtros rápidos por status de entrega.
+                </p>
+              </div>
+
+              <div className="hero-feat-card">
+                <div className="hero-feat-title">
+                  <Camera size={18} />
+                  <span>PRONTO PARA O WHATSAPP</span>
+                </div>
+                <p className="hero-feat-desc">
+                  Gere imagens em altíssima definição (HD) prontas para copiar (Ctrl+V) e compartilhar com a equipe.
+                </p>
+              </div>
             </div>
           </div>
         ) : (
