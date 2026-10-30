@@ -1190,6 +1190,47 @@ tfoot .lb {
   color: #CBD5E1;
 }
 
+.bc-footer-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font: 700 11.5px/1 var(--fb);
+  letter-spacing: 0.5px;
+  text-transform: none;
+  color: #94A3B8;
+}
+
+.bc-footer-center b {
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+.bc-footer-center .dev-tag {
+  background: rgba(227, 6, 19, 0.2);
+  color: var(--red-bright);
+  border: 1px solid rgba(227, 6, 19, 0.45);
+  font: 800 10px/1 var(--f);
+  padding: 2px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.page-dev-footer {
+  text-align: center;
+  padding: 22px 10px 30px;
+  font-size: 13px;
+  color: #64748B;
+  border-top: 1px solid rgba(30, 45, 74, 0.4);
+  margin-top: 36px;
+}
+
+.page-dev-footer b {
+  color: #E2E8F0;
+  font-weight: 700;
+}
+
 .bc-footer-shield {
   height: 22px;
   width: auto;

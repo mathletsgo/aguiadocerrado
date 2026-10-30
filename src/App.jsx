@@ -2300,6 +2300,10 @@ export default function App() {
                   <span>|</span>
                   <span>MAIS ESPORTE PARA TODOS</span>
                 </div>
+                <div className="bc-footer-center">
+                  <span className="dev-tag">DEV</span>
+                  <span>Programado e desenvolvido por <b>Mateus · CE 99</b></span>
+                </div>
                 <div className="bc-footer-right">
                   <img
                     src={logos.regionalClean}
@@ -2323,6 +2327,10 @@ export default function App() {
           </>
         )}
       </main>
+
+      <footer className="page-dev-footer">
+        <span>Programado e desenvolvido por <b>Mateus · CE 99</b></span>
+      </footer>
     </>
   );
 }
