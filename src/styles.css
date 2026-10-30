@@ -1,0 +1,1828 @@
+:root {
+  color-scheme: dark;
+  --red: #E30613;
+  --red-bright: #FF1E27;
+  --red-dark: #8B050D;
+  --bg-page: #06090F;
+  --bg-panel: #0B101B;
+  --bg-card: #101827;
+  --bg-row-even: #0E1524;
+  --bg-row-odd: #121B2E;
+  --border-subtle: #1E2B45;
+  --border-card: #243454;
+  --txt-main: #F8FAFC;
+  --txt-dim: #94A3B8;
+  --txt-mut: #64748B;
+  --green: #22C55E;
+  --green-bright: #4ADE80;
+  --yellow: #FACC15;
+  --orange: #F97316;
+  --danger: #F87171;
+  --f: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --fb: "Barlow", system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font: 14px/1.35 var(--fb);
+  background: radial-gradient(circle at 50% 0%, #0A0D14 0%, #000000 70%);
+  color: var(--txt-main);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Barra de Navegação Superior entre os Rankings (Fora do Print) */
+.dash-nav {
+  background: #090D16;
+  border-bottom: 2px solid var(--red);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+}
+
+.dash-nav-in {
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dash-nav-in::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+  color: #fff;
+  font: 900 italic 17px/1 var(--f);
+  letter-spacing: 1px;
+  padding: 6px 18px 6px 10px;
+  margin-right: 8px;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+  white-space: nowrap;
+}
+
+.nav-brand-shield {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+}
+
+.nav-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #94A3B8;
+  font: 700 14px/1 var(--f);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  padding: 13px 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.nav-tab:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-tab.active {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(227, 6, 19, 0.22) 0%, rgba(227, 6, 19, 0.04) 100%);
+  border-bottom-color: var(--red-bright);
+}
+
+.nav-tab svg {
+  width: 15px;
+  height: 15px;
+  color: var(--red-bright);
+}
+
+/* Container Principal */
+main {
+  max-width: 1400px;
+  margin: auto;
+  padding: 14px 18px 36px;
+}
+
+main.wide {
+  max-width: 1720px;
+}
+
+/* Painel de Controle Superior (Fora do Print) */
+.ctrl-panel {
+  background: rgba(16, 24, 39, 0.85);
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  backdrop-filter: blur(8px);
+}
+
+.bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+select,
+button {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border: 1px solid #2A3C5E;
+  border-radius: 6px;
+  background: #131D31;
+  color: #E2E8F0;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+select:hover,
+button:hover {
+  border-color: #476291;
+  background: #192640;
+}
+
+.up-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, var(--red) 0%, #B80510 100%);
+  color: #fff;
+  border: 1px solid #FF3B47;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(227, 6, 19, 0.35);
+}
+
+.up-btn:hover {
+  filter: brightness(1.1);
+}
+
+.up-btn svg,
+.prt-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.prt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  color: #fff;
+  border: 1px solid #22C55E;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(22, 163, 74, 0.35);
+}
+
+.prt-btn:hover {
+  filter: brightness(1.1);
+}
+
+.up-status {
+  font-size: 12.5px;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.hist-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: #0B111E;
+  border: 1px solid #1E2B45;
+  border-left: 4px solid var(--red);
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+.hist-lbl {
+  font: 700 12px/1 var(--f);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #94A3B8;
+}
+
+.hist-list {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.hist-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #131D31;
+  border: 1px solid #263859;
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: #CBD5E1;
+  cursor: pointer;
+}
+
+.hist-item.on {
+  background: #1E293B;
+  color: #fff;
+  border-color: var(--red-bright);
+  box-shadow: inset 3px 0 0 var(--red-bright);
+}
+
+.hist-item small {
+  font-size: 11px;
+  color: #94A3B8;
+}
+
+.hist-del {
+  border: 0;
+  background: transparent;
+  color: #94A3B8;
+  padding: 0 3px;
+  font-size: 14px;
+}
+
+.hist-del:hover {
+  color: var(--red-bright);
+}
+
+.hist-clr {
+  border: 0;
+  background: transparent;
+  color: #94A3B8;
+  font-size: 11.5px;
+  text-decoration: underline;
+  padding: 2px 6px;
+}
+
+/* ==========================================================================
+   ÁREA DE PRINT BROADCAST ESPORTIVO CENTAURO (#print-area)
+   ========================================================================== */
+.print-area {
+  background:
+    radial-gradient(circle at 85% 12%, rgba(227, 6, 19, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 15% 88%, rgba(34, 197, 94, 0.05) 0%, transparent 45%),
+    linear-gradient(180deg, #05070B 0%, #000000 100%);
+  border: 1.5px solid #1E2C47;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+/* Top Broadcast Banner */
+.bc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background:
+    linear-gradient(115deg, rgba(227, 6, 19, 0.12) 0%, rgba(15, 23, 42, 0.95) 38%, #090D16 100%);
+  border-bottom: 2px solid #1E2C47;
+  padding: 0 22px 0 0;
+  min-height: 78px;
+  position: relative;
+}
+
+.bc-header::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 340px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red-bright), transparent);
+}
+
+.bc-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bc-logo-box {
+  background: transparent;
+  min-height: 78px;
+  padding: 0 8px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.bc-centauro-img {
+  height: 36px;
+  width: auto;
+  max-width: 210px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+.bc-regional-shield-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -4px;
+  margin-right: 2px;
+}
+
+.bc-regional-shield {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.6));
+}
+
+.bc-title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 0;
+}
+
+.bc-title {
+  margin: 0;
+  font: 900 36px/0.95 var(--f);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.bc-title .hl {
+  color: var(--red-bright);
+  font-style: italic;
+}
+
+.bc-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: 700 13.5px/1 var(--f);
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: #CBD5E1;
+}
+
+.bc-sub svg {
+  width: 13px;
+  height: 13px;
+  color: var(--red-bright);
+}
+
+.bc-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.bc-period-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(16, 24, 39, 0.9);
+  border: 1.5px solid #2A3C5E;
+  border-radius: 9px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.bc-period-pill:hover {
+  border-color: var(--red-bright);
+}
+
+.bc-period-pill svg {
+  width: 22px;
+  height: 22px;
+  color: #94A3B8;
+}
+
+.bc-period-txt {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.bc-period-txt span {
+  font: 700 10.5px/1 var(--f);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #94A3B8;
+}
+
+.bc-period-txt b {
+  font: 800 15.5px/1.1 var(--f);
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+}
+
+.bc-slogan {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 14px;
+  border-left: 1px solid #263554;
+}
+
+.bc-slogan-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 28px;
+}
+
+.bc-slogan-bars i {
+  display: block;
+  width: 5px;
+  background: var(--red-bright);
+  border-radius: 1px;
+  transform: skewX(-12deg);
+}
+
+.bc-slogan-bars i:nth-child(1) {
+  height: 10px;
+}
+.bc-slogan-bars i:nth-child(2) {
+  height: 18px;
+}
+.bc-slogan-bars i:nth-child(3) {
+  height: 27px;
+}
+
+.bc-slogan-txt {
+  font: 900 italic 14px/1.05 var(--f);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.bc-slogan-txt em {
+  display: block;
+  font-style: italic;
+  color: var(--red-bright);
+}
+
+/* Grid Principal Broadcast: Tabela Largura Total */
+.bc-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding: 14px 16px 12px;
+  align-items: stretch;
+}
+
+.bc-body.full {
+  grid-template-columns: 1fr;
+}
+
+/* Tabela Broadcast Escura - Números Ultra Nítidos */
+.tw {
+  background: #05070B;
+  border: 1.5px solid #263859;
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+thead th {
+  background: #131E35;
+  color: #F8FAFC;
+  text-align: right;
+  padding: 11px 11px;
+  font: 800 14.5px/1.1 var(--f);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 2px solid #2E446B;
+  border-right: 1px solid rgba(51, 75, 115, 0.55);
+  white-space: nowrap;
+}
+
+thead th:first-child {
+  text-align: center;
+  width: 62px;
+}
+
+thead th:nth-child(2) {
+  text-align: left;
+  width: 78px;
+}
+
+thead th:nth-child(3) {
+  text-align: left;
+}
+
+tbody tr {
+  background: #06090F;
+  border-bottom: 1px solid rgba(51, 75, 115, 0.45);
+}
+
+tbody tr:nth-child(even) {
+  background: #0B0F18;
+}
+
+tbody tr:hover {
+  background: #141C2C;
+}
+
+tbody td {
+  padding: 7.5px 11px;
+  text-align: right;
+  font-family: var(--fb);
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.2px;
+  border-right: 1px solid rgba(51, 75, 115, 0.5);
+  white-space: nowrap;
+}
+
+tbody td:first-child {
+  text-align: center;
+  padding: 6px 6px;
+}
+
+tbody td:nth-child(2) {
+  text-align: left;
+  font-family: var(--fb);
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: #FFFFFF;
+}
+
+tbody td:nth-child(3) {
+  text-align: left;
+  min-width: 260px;
+}
+
+/* Destaque Verde para células e números que entregam a meta */
+tbody td.cell-ok {
+  background: rgba(34, 197, 94, 0.16) !important;
+  color: #4ADE80 !important;
+}
+
+tbody td.cell-ok b,
+tbody td.cell-ok .ic b,
+tbody tr.ac td:nth-child(2) b,
+tbody tr.mt td:nth-child(2) b {
+  color: #4ADE80 !important;
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.45);
+}
+
+/* Linha separadora das 3 Melhores Lojas (Top 3 Pódio) — removida a pedido */
+tbody tr.top3-end td {
+  border-bottom: 1px solid rgba(51, 75, 115, 0.45);
+}
+
+/* Linha separadora de quem bateu a meta e Linha Z4 (4 Piores Lojas) */
+tbody tr.zone-sep td {
+  border-top: 1.5px dashed rgba(148, 163, 184, 0.4);
+}
+
+tbody tr.z4-start td {
+  border-top: 2.5px dashed #FF3B47 !important;
+}
+
+tbody tr.z4 {
+  background: linear-gradient(90deg, rgba(227, 6, 19, 0.14) 0%, rgba(14, 21, 36, 0.95) 100%);
+}
+
+/* Medalhas e Badges de Posição (#) Estilo Broadcast */
+/* Placa inclinada (estilo placar de TV esportiva) — o texto é "desinclinado" no <b> */
+.pod {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 4px;
+  transform: skewX(-12deg);
+  font-family: var(--f);
+  position: relative;
+}
+
+.pod b {
+  display: inline-flex;
+  align-items: flex-start;
+  transform: skewX(12deg);
+  font: 900 italic 19px/1 var(--f);
+  letter-spacing: 0.3px;
+}
+
+.pod sup {
+  font-size: 10px;
+  line-height: 1;
+  margin-left: 1px;
+  margin-top: 1px;
+  opacity: 0.85;
+}
+
+/* 1º — Ouro metálico */
+.pod-1 {
+  min-width: 44px;
+  height: 30px;
+  background: linear-gradient(160deg, #FFF6CC 0%, #FFD54A 28%, #E8A800 52%, #FFE58A 72%, #B07800 100%);
+  color: #3A2500;
+  border: 1px solid #FFF1B8;
+  box-shadow:
+    0 0 0 1.5px #7A5200,
+    0 4px 14px rgba(255, 196, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.pod-1 b {
+  font-size: 22px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* 2º — Prata polida */
+.pod-2 {
+  min-width: 42px;
+  height: 28px;
+  background: linear-gradient(160deg, #FFFFFF 0%, #E3E9F0 28%, #9AA8BA 52%, #EEF2F6 72%, #6B7A8F 100%);
+  color: #1A2433;
+  border: 1px solid #FFFFFF;
+  box-shadow:
+    0 0 0 1.5px #4A5568,
+    0 4px 12px rgba(203, 213, 225, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.pod-2 b {
+  font-size: 21px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* 3º — Bronze/cobre */
+.pod-3 {
+  min-width: 42px;
+  height: 28px;
+  background: linear-gradient(160deg, #FFE0C2 0%, #F0A066 28%, #B5602A 52%, #F5B784 72%, #7A3A12 100%);
+  color: #2E1204;
+  border: 1px solid #FFD9B8;
+  box-shadow:
+    0 0 0 1.5px #5C2A0B,
+    0 4px 12px rgba(234, 120, 50, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.pod-3 b {
+  font-size: 21px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Bateu a meta — verde com faixa lateral */
+.pod-top {
+  background: linear-gradient(90deg, rgba(34, 197, 94, 0.28) 0%, rgba(34, 197, 94, 0.1) 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(74, 222, 128, 0.45);
+  border-left: 3px solid #4ADE80;
+}
+
+/* Abaixo da meta — neutro e limpo */
+.pod-mid {
+  background: linear-gradient(180deg, #1C2A45 0%, #142035 100%);
+  color: #CBD5E1;
+  border: 1px solid #2E446B;
+  border-left: 3px solid #64748B;
+}
+
+/* Z4 — vermelho Centauro */
+.pod-z4 {
+  background: linear-gradient(160deg, #FF2A35 0%, #C00510 100%);
+  color: #FFFFFF;
+  border: 1px solid #FF6B73;
+  box-shadow: 0 3px 10px rgba(227, 6, 19, 0.45);
+}
+
+.pod-z4 b {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Barra de Progresso Estilo Broadcast Esportivo - Números Ultra Nítidos */
+.ic {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.ic b {
+  min-width: 44px;
+  font-family: var(--fb);
+  font-size: 17px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.lb {
+  flex: 1;
+  min-width: 90px;
+  height: 12px;
+  background: #1E2C47;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.65);
+}
+
+.lb i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+.ic em {
+  font-family: var(--fb);
+  font-size: 14.5px;
+  font-weight: 800;
+  min-width: 40px;
+  text-align: right;
+  font-style: normal;
+}
+
+/* Badge de Evolução (▲/▼ vs planilha anterior) */
+.ev {
+  display: inline-flex;
+  align-items: center;
+  font: 800 11.5px/1 var(--fb);
+  padding: 3px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.ev.up {
+  background: rgba(34, 197, 94, 0.25);
+  color: #4ADE80;
+  border: 1px solid rgba(74, 222, 128, 0.5);
+}
+
+.ev.dn {
+  background: rgba(239, 68, 68, 0.25);
+  color: #FF8080;
+  border: 1px solid rgba(248, 113, 113, 0.5);
+}
+
+.ev.eq {
+  background: rgba(148, 163, 184, 0.2);
+  color: #CBD5E1;
+}
+
+/* Colunas de Diferença com Setas ▲ / ▼ Alto Contraste */
+.g {
+  color: #4ADE80 !important;
+  font-weight: 800 !important;
+}
+
+.b {
+  color: #FF6B6B !important;
+  font-weight: 800 !important;
+}
+
+.dif-arw {
+  font-size: 10px;
+  margin-right: 3px;
+  vertical-align: 1px;
+}
+
+/* Rodapé REGIONAL da Tabela - Super Destacado Estilo Broadcast */
+tfoot {
+  position: relative;
+  z-index: 2;
+}
+
+tfoot tr {
+  background: linear-gradient(90deg, rgba(227, 6, 19, 0.32) 0%, #0F1728 25%, #131E35 75%, rgba(227, 6, 19, 0.28) 100%) !important;
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+tfoot td {
+  padding: 13px 11px !important;
+  text-align: right;
+  font-size: 17.5px !important;
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+  border-top: 3px solid #FF1E27 !important;
+  border-bottom: 3px solid #FF1E27 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.14) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+tfoot td:first-child {
+  text-align: center;
+  font-family: var(--f);
+  font-size: 15px;
+  font-weight: 900;
+  color: #FF3B47;
+}
+
+tfoot td:nth-child(2) {
+  text-align: left;
+}
+
+tfoot td:nth-child(2) b {
+  display: inline-inline-flex;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #E30613 0%, #A8050F 100%);
+  color: #FFFFFF;
+  font: 900 italic 15px/1 var(--f);
+  letter-spacing: 1.2px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #FF4D58;
+  box-shadow: 0 2px 10px rgba(227, 6, 19, 0.55);
+}
+
+tfoot td:nth-child(3) {
+  text-align: left;
+}
+
+tfoot .ic b {
+  font-size: 19px !important;
+  color: #FFFFFF;
+}
+
+tfoot .lb {
+  height: 14px !important;
+}
+
+/* ==========================================================================
+   COLUNA LATERAL DIREITA: CARDS DE RESUMO REGIONAL & DESEMPENHO GERAL
+   ========================================================================== */
+.bc-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kpi-card {
+  background: linear-gradient(160deg, #131D31 0%, #0C1322 100%);
+  border: 1.5px solid #243454;
+  border-radius: 10px;
+  padding: 11px 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.kpi-card.highlight {
+  background:
+    radial-gradient(circle at 90% 15%, rgba(34, 197, 94, 0.18), transparent 60%),
+    linear-gradient(160deg, #112229 0%, #0C1422 100%);
+  border-color: #1F6E4A;
+}
+
+.kpi-card-hdr {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 800 13.5px/1 var(--f);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #E2E8F0;
+  margin-bottom: 6px;
+}
+
+.kpi-card-hdr svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.kpi-card-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.kpi-big {
+  font: 900 40px/0.95 var(--f);
+  color: #FFFFFF;
+  letter-spacing: 0.5px;
+}
+
+.kpi-pct-pill {
+  font: 900 17px/1 var(--f);
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: #111827;
+  background: linear-gradient(90deg, #EAB308, #FACC15);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+}
+
+.kpi-pct-pill.ok {
+  background: linear-gradient(90deg, #22C55E, #4ADE80);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.45);
+}
+
+.kpi-card-ftr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  color: #94A3B8;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 6px;
+}
+
+.kpi-card-ftr b {
+  color: #FFFFFF;
+}
+
+/* Card Desempenho Geral (Acima / Na Meta / Abaixo) */
+.desemp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.desemp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11, 17, 30, 0.65);
+  border: 1px solid rgba(36, 52, 84, 0.7);
+  border-radius: 7px;
+  padding: 6px 10px;
+}
+
+.desemp-lbl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 700 11.5px/1.15 var(--f);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #CBD5E1;
+}
+
+.desemp-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.desemp-val {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 800 16px/1 var(--f);
+}
+
+.desemp-val small {
+  font: 700 13px/1 var(--f);
+  color: #94A3B8;
+  border-left: 1px solid #2A3C5E;
+  padding-left: 7px;
+}
+
+/* Card Lista das 3 Melhores e 4 Piores Lojas */
+.extremes-card {
+  background: linear-gradient(160deg, #131D31 0%, #0C1322 100%);
+  border: 1.5px solid #243454;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ext-block {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ext-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: 800 12.5px/1 var(--f);
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ext-hdr.top3 {
+  color: #FACC15;
+}
+
+.ext-hdr.bot4 {
+  color: #FF6B6B;
+}
+
+.ext-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ext-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-family: var(--fb);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.ext-item.top3 {
+  background: rgba(34, 197, 94, 0.14);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  color: #FFFFFF;
+}
+
+.ext-item.bot4 {
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  color: #FFFFFF;
+}
+
+.ext-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ext-pos {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.ext-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ext-val {
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+/* Card Motivacional Foco */
+.foco-card {
+  margin-top: auto;
+  background: linear-gradient(135deg, rgba(227, 6, 19, 0.18) 0%, #0E1525 100%);
+  border: 1.5px solid rgba(227, 6, 19, 0.55);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.foco-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(227, 6, 19, 0.25);
+  border: 1.5px solid var(--red-bright);
+  display: grid;
+  place-items: center;
+  color: var(--red-bright);
+  flex-shrink: 0;
+}
+
+.foco-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.foco-txt b {
+  font: 900 15px/1 var(--f);
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.foco-txt span {
+  font: 700 11.5px/1.15 var(--f);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #CBD5E1;
+}
+
+/* Rodapé Broadcast dentro da Área de Print */
+.bc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px 10px;
+  border-top: 1px solid #1B2842;
+  background: #070B12;
+  font: 700 12px/1 var(--f);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #94A3B8;
+}
+
+.bc-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bc-footer-centauro {
+  height: 15px;
+  width: auto;
+  object-fit: contain;
+}
+
+.bc-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #CBD5E1;
+}
+
+.bc-footer-shield {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   TABELA PLACAR GERAL DE LOJAS (17 COLUNAS)
+   ========================================================================== */
+.placar-banner {
+  background: #161F33;
+  color: #fff;
+  text-align: center;
+  font: 900 18px/1.2 var(--f);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  padding: 9px 14px;
+  border-bottom: 2px solid #263554;
+}
+
+table.placar-table {
+  font-size: 13px;
+  border-collapse: collapse;
+}
+
+table.placar-table thead th {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 6px;
+  text-align: center;
+  font: 700 12px/1.15 var(--fb);
+  text-transform: none;
+  letter-spacing: 0;
+  color: #fff;
+  white-space: nowrap;
+}
+
+table.placar-table thead th.th-gray {
+  background: #1E293B;
+}
+
+table.placar-table thead th.th-red {
+  background: #151F33;
+}
+
+table.placar-table thead th.th-green {
+  background: #151F33;
+}
+
+table.placar-table thead th.th-desvio {
+  background: #151F33;
+}
+
+table.placar-table tbody td {
+  padding: 7px 9px;
+  border: 1px solid #1E2D4A;
+  text-align: right;
+  font-family: var(--fb);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #FFFFFF !important;
+  min-width: auto;
+}
+
+/* Zebrado no Placar Geral (Linhas Alternadas Clara / Escura) */
+table.placar-table tbody tr:nth-child(odd) td {
+  background: #060910 !important;
+}
+
+table.placar-table tbody tr:nth-child(even) td {
+  background: #111B2C !important;
+}
+
+table.placar-table tbody tr:nth-child(odd) td.pl-store {
+  background: #0B111F !important;
+}
+
+table.placar-table tbody tr:nth-child(even) td.pl-store {
+  background: #17243B !important;
+}
+
+/* Efeito Hover ao passar o mouse na linha da loja */
+table.placar-table tbody tr:hover td {
+  background: #1C2B47 !important;
+}
+
+table.placar-table tbody tr:hover td.pl-store {
+  background: #23375B !important;
+}
+
+table.placar-table tbody td.pl-store {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 800;
+  color: #FFFFFF !important;
+}
+
+table.placar-table tbody td.pl-store.pl-store-ok {
+  color: #4ADE80 !important;
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.45);
+}
+
+table.placar-table tbody td.pl-kpi {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 900;
+  color: #FFFFFF;
+}
+
+table.placar-table tbody td.pl-ok,
+table.placar-table tfoot td.pl-ok {
+  color: #4ADE80 !important;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.45);
+}
+
+/* Estrela na frente de todas as metas entregues */
+table.placar-table tbody td.pl-ok:not(.pl-kpi)::before,
+table.placar-table tbody td.desvio-pos::before,
+table.placar-table tfoot td.pl-ok:not(.pl-kpi)::before,
+table.placar-table tfoot td.desvio-pos::before {
+  content: "⭐ ";
+  font-size: 11px;
+  vertical-align: 1px;
+  margin-right: 2px;
+}
+
+table.placar-table tbody td.pl-bad,
+table.placar-table tfoot td.pl-bad {
+  color: #FF5A65 !important;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(255, 90, 101, 0.35);
+}
+
+/* Coloração Dinâmica da Coluna Desvio% - Apenas os Números */
+table.placar-table tbody td.desvio-pos {
+  color: #4ADE80 !important;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.45);
+}
+
+table.placar-table tbody td.desvio-neg {
+  color: #FF5A65 !important;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(255, 90, 101, 0.35);
+}
+
+table.placar-table tfoot td.desvio-pos {
+  color: #4ADE80 !important;
+  font-weight: 900;
+}
+
+table.placar-table tfoot td.desvio-neg {
+  color: #FF5A65 !important;
+  font-weight: 900;
+}
+
+/* Lojas Zeradas / Células Sem Resultado */
+table.placar-table tbody td.pl-neutral {
+  color: #64748B !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
+}
+
+table.placar-table tbody tr.pl-row-zerada td {
+  color: #64748B !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
+}
+
+table.placar-table tbody tr.pl-row-zerada td.pl-store {
+  color: #94A3B8 !important;
+}
+
+table.placar-table tfoot tr td {
+  background: #111A2E !important;
+  color: #FFFFFF !important;
+  border: 1px solid #334B73;
+  border-top: 3px solid #FF1E27 !important;
+  border-bottom: 3px solid #FF1E27 !important;
+  padding: 10px 8px;
+  text-align: right;
+  font: 800 15px/1.2 var(--fb);
+}
+
+table.placar-table tfoot tr td:first-child {
+  text-align: left;
+}
+
+table.placar-table tfoot tr td:nth-child(2) {
+  text-align: center;
+}
+
+/* Aba de Configuração de Metas */
+.cfg-card {
+  background: #0E1525;
+  border: 1.5px solid #243454;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.cfg-card h2,
+.cfg-card h3 {
+  font-family: var(--f);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #FFFFFF;
+}
+
+.cfg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.cfg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: #131D31;
+  border: 1px solid #263859;
+  border-radius: 7px;
+  padding: 9px 11px;
+}
+
+.cfg-field label {
+  font: 700 12.5px/1 var(--f);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94A3B8;
+}
+
+.cfg-field input {
+  font: 700 15px var(--fb);
+  padding: 6px 8px;
+  background: #0B111E;
+  color: #FFFFFF;
+  border: 1px solid #334B73;
+  border-radius: 5px;
+}
+
+.note {
+  background: #0E1525;
+  border: 1px solid #1E2C47;
+  border-left: 4px solid var(--red-bright);
+  color: #94A3B8;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  margin: 10px 0 0;
+  border-radius: 0 6px 6px 0;
+}
+
+body.dragover::after {
+  content: "Solte a planilha aqui para atualizar o Placar de Lojas";
+  position: fixed;
+  inset: 12px;
+  background: rgba(9, 13, 22, 0.92);
+  color: #fff;
+  border: 3px dashed var(--red-bright);
+  border-radius: 12px;
+  z-index: 99;
+  display: grid;
+  place-items: center;
+  font: 900 32px var(--f);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+
+@media (max-width: 1080px) {
+  .bc-body {
+    grid-template-columns: 1fr;
+  }
+  .bc-header {
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+}
+
+
+/* ==========================================================================
+   CARDS DE TRANSMISSÃO ESPORTIVA BROADCAST (CUPOM MISTO & PARIDADE)
+   ========================================================================== */
+
+.bc-kpi-section {
+  padding: 14px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bc-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 1100px) {
+  .bc-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .bc-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bc-kpi-card {
+  background: linear-gradient(135deg, #0D1424 0%, #080D18 100%);
+  border: 1.5px solid #1E2D4A;
+  border-radius: 9px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.bc-kpi-card:hover {
+  border-color: #3B5380;
+}
+
+.bc-kpi-card.gold-border {
+  border-color: #B58414;
+  background: linear-gradient(135deg, rgba(181, 132, 20, 0.14) 0%, #0A0E1A 100%);
+}
+
+.bc-kpi-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba(30, 45, 74, 0.6);
+  border: 1px solid rgba(64, 92, 145, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--txt-main);
+  flex-shrink: 0;
+}
+
+.bc-kpi-icon-wrap.gold-icon {
+  background: linear-gradient(135deg, #FFD54A 0%, #B58414 100%);
+  color: #1A1200;
+  border-color: #FFE58A;
+  box-shadow: 0 2px 8px rgba(255, 213, 74, 0.35);
+}
+
+.bc-kpi-icon-wrap.trophy-icon {
+  background: linear-gradient(135deg, #FFE0C2 0%, #B5602A 100%);
+  color: #1A0A00;
+  border-color: #FFD9B8;
+}
+
+.bc-kpi-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.bc-kpi-label {
+  font: 800 11.5px/1 var(--f);
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: #94A3B8;
+}
+
+.bc-kpi-val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bc-kpi-num {
+  font: 900 24px/1 var(--fb);
+  color: #FFFFFF;
+  letter-spacing: -0.3px;
+}
+
+.bc-kpi-num.gold-text {
+  color: #FFD54A;
+  text-shadow: 0 0 12px rgba(255, 213, 74, 0.4);
+}
+
+.bc-kpi-badge {
+  font: 800 11px/1 var(--fb);
+  padding: 3px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.bc-kpi-badge.gold-bg {
+  background: linear-gradient(135deg, #FFD54A 0%, #B58414 100%);
+  color: #241700;
+  font-weight: 900;
+}
+
+.bc-kpi-badge.green-bg {
+  background: rgba(34, 197, 94, 0.22);
+  color: #4ADE80;
+  border: 1px solid rgba(74, 222, 128, 0.4);
+}
+
+.bc-kpi-badge.red-bg {
+  background: rgba(239, 68, 68, 0.22);
+  color: #FF8080;
+  border: 1px solid rgba(248, 113, 113, 0.4);
+}
+
+.bc-kpi-sub {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #94A3B8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Duplo indicador no mesmo card */
+.bc-kpi-dual-values {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0;
+}
+
+.bc-kpi-dual-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.bc-kpi-sub-title {
+  font: 700 9.5px/1 var(--f);
+  color: #64748B;
+  letter-spacing: 0.8px;
+}
+
+.bc-kpi-num-sm {
+  font: 900 18px/1 var(--fb);
+}
+
+.bc-kpi-dual-item small {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.bc-kpi-divider {
+  width: 1px;
+  height: 28px;
+  background: #1E2D4A;
+}
+
+.bc-kpi-mini-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.badge-chip {
+  font: 700 10.5px/1 var(--fb);
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.badge-chip.cm-chip {
+  background: rgba(250, 204, 21, 0.15);
+  color: #FACC15;
+  border: 1px solid rgba(250, 204, 21, 0.35);
+}
+
+.badge-chip.p-chip {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.badge-chip.bad-chip {
+  background: rgba(239, 68, 68, 0.15);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.bc-kpi-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #162035;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.bc-kpi-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* Barra de Filtros Rápidos */
+.bc-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(13, 20, 36, 0.7);
+  border: 1px solid #1E2D4A;
+  border-radius: 8px;
+  padding: 6px 12px;
+  flex-wrap: wrap;
+}
+
+.bc-filter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: 800 11px/1 var(--f);
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #94A3B8;
+}
+
+.bc-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  appearance: none;
+  background: #141E33;
+  border: 1px solid #28395B;
+  color: #CBD5E1;
+  font: 700 11.5px/1 var(--fb);
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filter-pill:hover {
+  background: #1E2D4A;
+  color: #FFFFFF;
+}
+
+.filter-pill.active {
+  background: var(--red);
+  border-color: var(--red-bright);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(227, 6, 19, 0.45);
+}
+
+.filter-pill.gold-pill.active {
+  background: linear-gradient(135deg, #FFD54A 0%, #B58414 100%);
+  border-color: #FFE58A;
+  color: #241700;
+  box-shadow: 0 2px 8px rgba(255, 213, 74, 0.45);
+}
+
+.filter-pill.cm-pill.active {
+  background: #D97706;
+  border-color: #FBBF24;
+  color: #FFFFFF;
+}
+
+.filter-pill.p-pill.active {
+  background: #0284C7;
+  border-color: #38BDF8;
+  color: #FFFFFF;
+}
+
+.filter-pill.green-pill.active {
+  background: #16A34A;
+  border-color: #4ADE80;
+  color: #FFFFFF;
+}
+
+.filter-pill.bad-pill.active {
+  background: #DC2626;
+  border-color: #F87171;
+  color: #FFFFFF;
+}
+
+/* Tags de Conquista na Tabela */
+.cm-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 800 11.5px/1 var(--fb);
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.cm-tag-both {
+  background: linear-gradient(135deg, rgba(255, 213, 74, 0.25) 0%, rgba(34, 197, 94, 0.25) 100%);
+  color: #FFD54A;
+  border: 1px solid #FFD54A;
+  box-shadow: 0 0 10px rgba(255, 213, 74, 0.25);
+  font-weight: 900;
+}
+
+.cm-tag-cm {
+  background: rgba(250, 204, 21, 0.16);
+  color: #FACC15;
+  border: 1px solid rgba(250, 204, 21, 0.45);
+}
+
+.cm-tag-p {
+  background: rgba(56, 189, 248, 0.16);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+}
+
+.cm-tag-bad {
+  background: rgba(239, 68, 68, 0.16);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.cm-tag-cm-ok,
+.cm-tag-p-ok {
+  background: rgba(34, 197, 94, 0.18);
+  color: #4ADE80;
+  border: 1px solid rgba(74, 222, 128, 0.45);
+  font-weight: 800;
+}
