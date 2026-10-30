@@ -1187,38 +1187,65 @@ export default function App() {
           /* Área Limpa de Print Broadcast Esportivo Centauro */
           <>
             <div className="print-area" id="print-area" ref={printRef}>
-              {/* TOPO BROADCAST CENTAURO */}
+              {/* TOPO BROADCAST CENTAURO - DESIGN ESPORTIVO / FUTEBOL */}
               <div className="bc-header">
                 <div className="bc-brand-wrap">
-                  <div className="bc-logo-box">
+                  {/* Bloco de Logos: Centauro Oficial + Escudo Águias */}
+                  <div className="bc-logo-cluster">
                     <img
-                      src={logos.regionalClean}
-                      alt="Águias do Cerrado"
-                      className="bc-regional-shield"
+                      src={logos.centauroWhite}
+                      alt="Centauro"
+                      className="bc-centauro-img"
                     />
+                    <div className="bc-logo-sep" />
+                    <div className="bc-shield-badge">
+                      <img
+                        src={logos.regionalClean}
+                        alt="Águias do Cerrado"
+                        className="bc-regional-shield"
+                      />
+                    </div>
                   </div>
 
+                  {/* Título da Transmissão */}
                   <div className="bc-title-box">
+                    <div className="bc-champ-badge">
+                      <span className="bc-live-dot" />
+                      <span>CAMPEONATO REGIONAL · CENTAURO</span>
+                      <span className="bc-pill-tag">2026</span>
+                    </div>
+
                     <h2 className="bc-title">
                       {currentTabInfo.prefix}{' '}
                       <span className="hl">{currentTabInfo.hl}</span>
                     </h2>
-                    <div className="bc-sub">
-                      <MapPin />
-                      ÁGUIAS DO CERRADO
+
+                    <div className="bc-sub-row">
+                      <span className="bc-sub-team">
+                        <MapPin size={13} />
+                        ÁGUIAS DO CERRADO
+                      </span>
+                      <span className="bc-sub-dot">•</span>
+                      <span className="bc-sub-motto">
+                        MAIS ESPORTE PARA TODOS
+                      </span>
                     </div>
                   </div>
                 </div>
 
+                {/* Lado Direito: Placar de Tempo / Rodada */}
                 <div className="bc-right">
                   <div
-                    className="bc-period-pill"
+                    className="bc-period-card"
                     onClick={handleEditPeriod}
-                    title="Clique para ajustar o período se necessário"
+                    title="Clique para ajustar a rodada/período"
                   >
-                    <Calendar />
-                    <div className="bc-period-txt">
-                      <span>PERÍODO</span>
+                    <div className="bc-period-top">
+                      <span className="bc-period-indicator" />
+                      <span>RODADA / PERÍODO</span>
+                    </div>
+                    <div className="bc-period-body">
+                      <Calendar size={18} />
                       <b>{periodSub}</b>
                     </div>
                   </div>

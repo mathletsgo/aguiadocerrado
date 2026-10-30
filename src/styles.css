@@ -302,150 +302,257 @@ button:hover {
   position: relative;
 }
 
-/* Top Broadcast Banner */
+/* ==========================================================================
+   FACHADA / TOPO BROADCAST CENTAURO - FUTEBOL & ESPORTE DE ALTA PERFORMANCE
+   ========================================================================== */
 .bc-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   background:
-    linear-gradient(115deg, rgba(227, 6, 19, 0.12) 0%, rgba(15, 23, 42, 0.95) 38%, #090D16 100%);
-  border-bottom: 2px solid #1E2C47;
-  padding: 0 22px 0 0;
-  min-height: 78px;
+    radial-gradient(ellipse 600px 120px at 20% 0%, rgba(227, 6, 19, 0.28) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 100px at 85% 0%, rgba(30, 58, 138, 0.2) 0%, transparent 60%),
+    linear-gradient(115deg, #070A11 0%, #0D1424 45%, #05070C 100%);
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg, #E30613 0%, #FF2A35 40%, #FFFFFF 65%, #F59E0B 100%) 1;
+  padding: 12px 24px 12px 18px;
+  min-height: 96px;
   position: relative;
+  overflow: hidden;
 }
 
-.bc-header::after {
+/* Listras diagonais de estádio/velocidade no fundo */
+.bc-header::before {
   content: "";
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 340px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--red-bright), transparent);
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 18px,
+    rgba(255, 255, 255, 0.015) 18px,
+    rgba(255, 255, 255, 0.015) 36px
+  );
+  pointer-events: none;
 }
 
 .bc-brand-wrap {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
+  position: relative;
+  z-index: 2;
 }
 
-.bc-logo-box {
-  background: transparent;
-  min-height: 78px;
-  padding: 0 8px 0 20px;
+/* Agrupamento das Logos: Centauro + Escudo com acabamento de time */
+.bc-logo-cluster {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(227, 6, 19, 0.18) 0%, rgba(15, 23, 42, 0.6) 100%);
+  border: 1px solid rgba(227, 6, 19, 0.35);
+  border-radius: 12px;
+  padding: 8px 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: skewX(-4deg);
 }
 
 .bc-centauro-img {
-  height: 36px;
+  height: 42px;
   width: auto;
-  max-width: 210px;
+  max-width: 170px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+  transform: skewX(4deg);
 }
 
-.bc-regional-shield-wrap {
+.bc-logo-sep {
+  width: 2px;
+  height: 38px;
+  background: linear-gradient(180deg, transparent, var(--red-bright), transparent);
+  transform: skewX(-8deg);
+}
+
+.bc-shield-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: -4px;
-  margin-right: 2px;
+  transform: skewX(4deg);
 }
 
 .bc-regional-shield {
-  height: 64px;
+  height: 68px;
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 4px 14px rgba(227, 6, 19, 0.55));
+  transition: transform 0.2s ease;
 }
 
+.bc-regional-shield:hover {
+  transform: scale(1.05);
+}
+
+/* Caixa de Títulos com Design de Transmissão Esportiva */
 .bc-title-box {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 10px 0;
+  gap: 4px;
+  position: relative;
+  z-index: 2;
+}
+
+.bc-champ-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 800 11px/1 var(--f);
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #CBD5E1;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px 12px 4px 8px;
+  width: fit-content;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.bc-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #EF4444;
+  box-shadow: 0 0 10px #EF4444;
+  animation: pulseLive 1.5s infinite;
+}
+
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.bc-pill-tag {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+  color: #FFFFFF;
+  font-weight: 900;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
 }
 
 .bc-title {
   margin: 0;
-  font: 900 36px/0.95 var(--f);
-  letter-spacing: 1px;
+  font: 900 italic 40px/0.95 var(--f);
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   color: #FFFFFF;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 3px 16px rgba(0, 0, 0, 0.7);
 }
 
 .bc-title .hl {
   color: var(--red-bright);
-  font-style: italic;
+  text-shadow: 0 0 20px rgba(227, 6, 19, 0.6);
+  display: inline-block;
+  padding: 0 4px;
+  background: linear-gradient(180deg, transparent 65%, rgba(227, 6, 19, 0.25) 100%);
 }
 
-.bc-sub {
+.bc-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 700 13px/1 var(--f);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.bc-sub-team {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font: 700 13.5px/1 var(--f);
-  letter-spacing: 2.2px;
-  text-transform: uppercase;
-  color: #CBD5E1;
+  color: #F8FAFC;
+  font-weight: 800;
 }
 
-.bc-sub svg {
-  width: 13px;
-  height: 13px;
+.bc-sub-team svg {
   color: var(--red-bright);
 }
 
+.bc-sub-dot {
+  color: #475569;
+}
+
+.bc-sub-motto {
+  color: var(--red-bright);
+  font-style: italic;
+  font-weight: 800;
+}
+
+/* Lado Direito: Cronômetro / Card de Rodada */
 .bc-right {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
 }
 
-.bc-period-pill {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(16, 24, 39, 0.9);
-  border: 1.5px solid #2A3C5E;
-  border-radius: 9px;
-  padding: 7px 14px;
-  cursor: pointer;
-  transition: border-color 0.15s;
-}
-
-.bc-period-pill:hover {
-  border-color: var(--red-bright);
-}
-
-.bc-period-pill svg {
-  width: 22px;
-  height: 22px;
-  color: #94A3B8;
-}
-
-.bc-period-txt {
+.bc-period-card {
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
+  gap: 4px;
+  background: linear-gradient(145deg, #10192A 0%, #0A0F1B 100%);
+  border: 1.5px solid #28395B;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.15s ease;
+  transform: skewX(-4deg);
 }
 
-.bc-period-txt span {
-  font: 700 10.5px/1 var(--f);
+.bc-period-card:hover {
+  border-color: var(--red-bright);
+  transform: skewX(-4deg) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(227, 6, 19, 0.35);
+}
+
+.bc-period-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 800 10.5px/1 var(--f);
   letter-spacing: 1.4px;
   text-transform: uppercase;
   color: #94A3B8;
+  transform: skewX(4deg);
 }
 
-.bc-period-txt b {
-  font: 800 15.5px/1.1 var(--f);
-  letter-spacing: 0.5px;
+.bc-period-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red-bright);
+}
+
+.bc-period-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #FFFFFF;
+  transform: skewX(4deg);
+}
+
+.bc-period-body svg {
+  color: var(--red-bright);
+  flex-shrink: 0;
+}
+
+.bc-period-body b {
+  font: 900 18px/1 var(--f);
+  letter-spacing: 0.8px;
   color: #FFFFFF;
 }
 
