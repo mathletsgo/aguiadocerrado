@@ -50,7 +50,6 @@ const TABS = [
   { id: 'cm_paridade', label: 'Cupom Misto & Paridade', prefix: 'RANKING', hl: 'CM & PARIDADE', foco: 'FOCO EM CM & PARIDADE', icon: Combine },
   { id: 'placar', label: 'Placar de Lojas (Geral)', prefix: 'PLACAR DE', hl: 'LOJAS', foco: 'FOCO NOS KPIS', icon: LayoutGrid },
   { id: 'ruptura', label: 'Ranking de Ruptura', prefix: 'RANKING DE', hl: 'RUPTURA', foco: 'CONTROLE DE RUPTURA', icon: PackageX },
-  { id: 'oms', label: 'Ranking OMS & Digital', prefix: 'RANKING', hl: 'OMS & DIGITAL', foco: 'FOCO NO DIGITAL', icon: Smartphone },
   { id: 'vendas', label: 'Vendas & NPS', prefix: 'RANKING', hl: 'VENDAS & NPS', foco: 'FOCO EM VENDAS & NPS', icon: TrendingUp },
   { id: 'metas', label: 'Metas', prefix: 'CONFIGURAÇÃO DE', hl: 'METAS', foco: 'METAS', icon: Settings }
 ];
@@ -93,13 +92,6 @@ const SORT_OPTIONS = {
     { value: 'rupEx3', label: 'Ordenar: % Ruptura EX3' },
     { value: 'rupVa', label: '% Ruptura V.A.' },
     { value: 'rupAvg', label: 'Média Geral Ruptura' }
-  ],
-  oms: [
-    { value: 'ckout', label: 'Ordenar: % Checkout Móvel' },
-    { value: 'capEmail', label: '% Captura E-mail' },
-    { value: 'ee', label: '% Estoque Estendido (EE)' },
-    { value: 'oms', label: 'Venda OMS (R$)' },
-    { value: 'npsOms', label: 'NPS OMS' }
   ],
   vendas: [
     { value: 'at', label: 'Ordenar: % Atingimento Meta' },
@@ -251,9 +243,6 @@ export default function App() {
     } else if (tabId === 'ruptura') {
       setSortBy('rupEx3');
       setDesc(false); // Ruptura: menor primeiro!
-    } else if (tabId === 'oms') {
-      setSortBy('ckout');
-      setDesc(true);
     } else if (tabId === 'vendas') {
       setSortBy('at');
       setDesc(true);
@@ -390,33 +379,41 @@ export default function App() {
     if (!printRef.current || printing) return;
     try {
       setPrinting(true);
-      setStatusMsg('Gerando imagem HD...');
+      setStatusMsg('Gerando imagem em Alta Resolução...');
+
+      // Escala 2x é o "sweet spot" ideal para o WhatsApp:
+      // Imagens com largura entre 1600px e 2400px NÃO sofrem compressão destrutiva do WhatsApp Web/Mobile
       const canvas = await html2canvas(printRef.current, {
-        scale: 3,
-        backgroundColor: '#000000',
+        scale: 2,
+        backgroundColor: '#06090F',
         useCORS: true,
-        logging: false
+        logging: false,
+        imageTimeout: 0,
+        windowWidth: 1440
       });
       const per = (activeItem?.periodSub || 'out-2026')
         .replace(/[^\w\d]+/g, '-')
         .replace(/^-|-$/g, '');
       const fname = `Ranking-${activeTab.toUpperCase()}-Aguias-do-Cerrado-${per}.png`;
+
+      // Download do arquivo PNG original sem perda
       const link = document.createElement('a');
       link.download = fname;
       link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
 
+      // Copia para a área de transferência
       canvas.toBlob(
         async (blob) => {
           if (blob && navigator.clipboard && window.ClipboardItem) {
             try {
               await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-              setStatusMsg('📸 Imagem salva e copiada! Basta dar Ctrl+V no WhatsApp.');
+              setStatusMsg('📸 Imagem salva e copiada! Dica: No WhatsApp, envie como Foto ou Documento para 100% de nitidez.');
             } catch {
-              setStatusMsg('📸 Imagem em alta qualidade salva com sucesso!');
+              setStatusMsg('📸 Imagem baixada em alta qualidade!');
             }
           } else {
-            setStatusMsg('📸 Imagem em alta qualidade salva com sucesso!');
+            setStatusMsg('📸 Imagem baixada em alta qualidade!');
           }
         },
         'image/png',
@@ -609,9 +606,6 @@ export default function App() {
         // Ruptura: menor é melhor!
         return (a.rupEx3 == null) - (b.rupEx3 == null) || (a.rupEx3 ?? 99) - (b.rupEx3 ?? 99);
       }
-      if (activeTab === 'oms') {
-        return (a.ckout == null) - (b.ckout == null) || (b.ckout ?? 0) - (a.ckout ?? 0);
-      }
       return (a.at == null) - (b.at == null) || (b.at ?? 0) - (a.at ?? 0);
     });
 
@@ -629,8 +623,6 @@ export default function App() {
           ? x.kpisCount != null
           : activeTab === 'ruptura'
           ? x.rupEx3 != null
-          : activeTab === 'oms'
-          ? x.ckout != null
           : x.at != null;
       x.pos = hasVal ? idx + 1 : null;
     });
@@ -700,11 +692,6 @@ export default function App() {
           ratio = x.rupEx3 <= 0 ? 1 : regTargets.rupturaEx3 / x.rupEx3;
           isMet = x.dEx3 <= 0;
         }
-      } else if (activeTab === 'oms') {
-        if (x.ckout != null && regTargets.ckoutMovel) {
-          ratio = x.ckout / regTargets.ckoutMovel;
-          isMet = x.dCk >= 0;
-        }
       } else if (activeTab === 'vendas') {
         if (x.at != null) {
           ratio = x.at;
@@ -741,9 +728,6 @@ export default function App() {
       }
       if (activeTab === 'ruptura') {
         return { val: pc(x.rupEx3), dif: sp(x.dEx3, 1, true), ok: (x.dEx3 ?? 1) <= 0 };
-      }
-      if (activeTab === 'oms') {
-        return { val: pc(x.ckout), dif: sp(x.dCk), ok: (x.dCk ?? -1) >= 0 };
       }
       return { val: pc(x.at), dif: brl(x.v, 0), ok: (x.at ?? 0) >= 1 };
     };
@@ -2115,108 +2099,6 @@ export default function App() {
                             {sp(totalObj.dVa, 1, true)}
                           </td>
                           <td>{pc(totalObj.rupAvg, 1)}</td>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  )}
-
-                  {/* 7. TABELA DE RANKING DE OMS & DIGITAL */}
-                  {activeTab === 'oms' && (
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Loja</th>
-                          <th>% Checkout Móvel</th>
-                          <th>Dif. {pc(regTargets.ckoutMovel, 0)}</th>
-                          <th>Qtd Ckout</th>
-                          <th>% Cap. E-mail</th>
-                          <th>Dif. {pc(regTargets.capEmail, 0)}</th>
-                          <th>% EE</th>
-                          <th>Venda OMS</th>
-                          <th>NPS OMS</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {rows.map((x, idx) => {
-                          const isTop3 = idx < 3;
-                          const isTop3End = rows.length >= 6 && idx === 2;
-                          const isZ4Start = rows.length >= 8 && idx === rows.length - 4;
-                          const isZ4 = rows.length >= 8 && idx >= rows.length - 4;
-                          const ckOk = x.dCk != null && x.dCk >= 0;
-                          const emOk = x.dEm != null && x.dEm >= 0;
-                          const eeOk = x.dEe != null && x.dEe >= 0;
-                          return (
-                            <tr
-                              key={x.c}
-                              className={`${ckOk ? 'ac' : 'ab'} ${isTop3 ? 'top3-row' : ''} ${
-                                isTop3End ? 'top3-end' : ''
-                              } ${isZ4Start ? 'z4-start' : ''} ${isZ4 ? 'z4' : ''}`}
-                            >
-                              <td>
-                                <PodioCell pos={x.pos} isMet={ckOk} isZ4={isZ4} />
-                              </td>
-                              <td className={ckOk ? 'cell-ok' : ''}>
-                                <b>{x.c}</b>
-                              </td>
-                              <td className={ckOk ? 'cell-ok' : ''}>
-                                <MetricBarCell
-                                  val={x.ckout}
-                                  target={regTargets.ckoutMovel}
-                                  ev={x.evCk}
-                                  prevVal={x.prevCk}
-                                  isPct
-                                />
-                              </td>
-                              <td className={x.dCk == null ? '' : x.dCk < 0 ? 'b' : 'g'}>
-                                {sp(x.dCk)}
-                              </td>
-                              <td>{nf(x.qtdCkout, 0)}</td>
-                              <td className={emOk ? 'cell-ok' : ''}>{pc(x.capEmail)}</td>
-                              <td className={x.dEm == null ? '' : x.dEm < 0 ? 'b' : 'g'}>
-                                {sp(x.dEm)}
-                              </td>
-                              <td className={eeOk ? 'cell-ok' : ''}>{pc(x.ee)}</td>
-                              <td>{brl(x.oms, 0)}</td>
-                              <td>{pc(x.npsOms)}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <td>–</td>
-                          <td>
-                            <b>REGIONAL</b>
-                          </td>
-                          <td>
-                            <MetricBarCell
-                              val={totalObj.ckout}
-                              target={regTargets.ckoutMovel}
-                              ev={totalObj.evCk}
-                              prevVal={totalObj.prevCk}
-                              isPct
-                            />
-                          </td>
-                          <td
-                            className={
-                              totalObj.dCk == null ? '' : totalObj.dCk < 0 ? 'b' : 'g'
-                            }
-                          >
-                            {sp(totalObj.dCk)}
-                          </td>
-                          <td>–</td>
-                          <td>{pc(totalObj.capEmail)}</td>
-                          <td
-                            className={
-                              totalObj.dEm == null ? '' : totalObj.dEm < 0 ? 'b' : 'g'
-                            }
-                          >
-                            {sp(totalObj.dEm)}
-                          </td>
-                          <td>{pc(totalObj.ee)}</td>
-                          <td>{brl(totalObj.oms, 0)}</td>
-                          <td>{pc(totalObj.npsOms)}</td>
                         </tr>
                       </tfoot>
                     </table>
