@@ -450,6 +450,7 @@ export default function App() {
     const T_NPS_OMS = regTargets.npsOms ?? 0.58;
     const T_PERS = regTargets.personalizacao ?? 0.023;
     const T_CONV = regTargets.conversao ?? 0.18;
+    const regConvVal = activeItem?.totalRow?.conv ?? regTargets.conversao ?? 0.18;
 
     const enrich = (s, isTotal = false) => {
       const mi = isTotal ? regTargets.ipcRegional : (metaIpc[s.c] ?? s.mi ?? regTargets.ipcRegional);
@@ -492,7 +493,7 @@ export default function App() {
         s.crescConv != null
           ? s.crescConv >= 0
           : s.conv != null && s.v != null
-          ? s.conv >= T_CONV
+          ? (isTotal ? s.conv >= T_CONV : s.conv >= regConvVal)
           : null;
       const kpiPers = s.futebol != null ? s.futebol >= T_PERS : null;
       const kpiEx3 = s.rupEx3 != null && s.v != null ? s.rupEx3 <= T_EX3 : null;
@@ -1986,7 +1987,15 @@ export default function App() {
                           </td>
                           <td>{totalObj.cresc != null ? pc(totalObj.cresc, 2) : '–'}</td>
                           <td>{totalObj.ipc != null ? nf(totalObj.ipc, 2) : '–'}</td>
-                          <td>
+                          <td
+                            className={
+                              totalObj.kpiConv != null
+                                ? totalObj.kpiConv
+                                  ? 'pl-ok'
+                                  : 'pl-bad'
+                                : ''
+                            }
+                          >
                             {totalObj.crescConv != null
                               ? nf(totalObj.crescConv, 2)
                               : totalObj.conv != null
