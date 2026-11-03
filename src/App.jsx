@@ -1311,13 +1311,13 @@ export default function App() {
                               <td className={x.d == null ? '' : x.d < 0 ? 'b' : 'g'}>
                                 {sg(x.d)}
                               </td>
-                              <td>
+                              <td className={x.dc != null && x.dc >= 0 ? 'g' : ''}>
                                 {pc(x.cm)}
                               </td>
                               <td className={x.dc == null ? '' : x.dc < 0 ? 'b' : 'g'}>
                                 {sp(x.dc)}
                               </td>
-                              <td>
+                              <td className={x.dp != null && x.dp >= 0 ? 'g' : ''}>
                                 {nf(x.p)}
                               </td>
                               <td className={x.dp == null ? '' : x.dp < 0 ? 'b' : 'g'}>
