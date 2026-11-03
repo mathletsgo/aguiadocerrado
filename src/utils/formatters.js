@@ -31,13 +31,21 @@ export const barColor = (pct, isMet) => {
   return "#EF4444";                          // Vermelho: < 88% da meta
 };
 
-export const curMonthBadge = () => {
+export const curMonthBadge = (periodBadge) => {
+  if (periodBadge) return periodBadge;
   const d = new Date();
   const M = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
   return `${M[d.getMonth()]}/${d.getFullYear()}`;
 };
 
-export const curMonthHeader = () => {
+export const curMonthHeader = (periodBadge) => {
+  if (periodBadge) {
+    // periodBadge geralmente vem como "OUT/2026" ou "OUT/26"
+    const parts = periodBadge.split("/");
+    const mStr = parts[0]?.toLowerCase() || "";
+    const yStr = parts[1] ? String(parts[1]).slice(-2) : "";
+    return `Meta ${mStr}/${yStr}`;
+  }
   const d = new Date();
   const M = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   return `Meta ${M[d.getMonth()]}/${String(d.getFullYear()).slice(2)}`;

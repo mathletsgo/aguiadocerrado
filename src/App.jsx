@@ -381,15 +381,21 @@ export default function App() {
       setPrinting(true);
       setStatusMsg('Gerando imagem em Alta Resolução...');
 
-      // Escala 2x é o "sweet spot" ideal para o WhatsApp:
-      // Imagens com largura entre 1600px e 2400px NÃO sofrem compressão destrutiva do WhatsApp Web/Mobile
-      const canvas = await html2canvas(printRef.current, {
+      // Captura o elemento em largura e altura total (scrollWidth/scrollHeight)
+      // Garantindo que capture 100% da tabela inteira, sem cortar nenhuma coluna ou linha
+      const el = printRef.current;
+      const fullWidth = el.scrollWidth;
+      const fullHeight = el.scrollHeight;
+
+      const canvas = await html2canvas(el, {
         scale: 2,
         backgroundColor: '#06090F',
         useCORS: true,
         logging: false,
         imageTimeout: 0,
-        windowWidth: 1440
+        width: fullWidth,
+        height: fullHeight,
+        windowWidth: fullWidth + 100
       });
       const per = (activeItem?.periodSub || 'out-2026')
         .replace(/[^\w\d]+/g, '-')
@@ -1259,7 +1265,7 @@ export default function App() {
                           <th>#</th>
                           <th>Loja</th>
                           <th>IPC</th>
-                          <th>{curMonthHeader()}</th>
+                          <th>{curMonthHeader(activeItem?.periodBadge)}</th>
                           <th>Dif.</th>
                           <th>Cupom misto</th>
                           <th>Dif. {pc(regTargets.cupomMisto, 0)}</th>
